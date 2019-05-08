@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 
 
     @IBAction func handleDownload() {
-        native.startDownload(url)
+        native.startDownload(url, resumeData: nil)
     }
     @IBAction func handleResume() {
         native.resumeDownload()
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 
 
     @IBAction func handleAlamofireDownload() {
-        alamofire.startDownload(url)
+        alamofire.startDownload(url, resumeData: nil)
     }
     @IBAction func handleAlamofireResume() {
         alamofire.resumeDownload()

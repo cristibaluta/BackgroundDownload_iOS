@@ -12,7 +12,6 @@
 		28E87F9D223BEB230046FC1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28E87F9B223BEB230046FC1F /* Main.storyboard */; };
 		28E87F9F223BEB240046FC1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28E87F9E223BEB240046FC1F /* Assets.xcassets */; };
 		28E87FA2223BEB240046FC1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28E87FA0223BEB240046FC1F /* LaunchScreen.storyboard */; };
-		28E87FAA223BFF750046FC1F /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E87FA9223BFF750046FC1F /* DownloadService.swift */; };
 		56B3FBCE2281D364000AFA9D /* DownloadNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3FBCD2281D364000AFA9D /* DownloadNative.swift */; };
 		56B3FBD02281D386000AFA9D /* DownloadAlamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3FBCF2281D386000AFA9D /* DownloadAlamofire.swift */; };
 		8DAF5985C929EEE999E8924E /* Pods_BackgroundDownload.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFB2E07189E1F1B3E834F1EE /* Pods_BackgroundDownload.framework */; };
@@ -26,7 +25,6 @@
 		28E87F9E223BEB240046FC1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28E87FA1223BEB240046FC1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28E87FA3223BEB240046FC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28E87FA9223BFF750046FC1F /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		56B3FBCD2281D364000AFA9D /* DownloadNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadNative.swift; sourceTree = "<group>"; };
 		56B3FBCF2281D386000AFA9D /* DownloadAlamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAlamofire.swift; sourceTree = "<group>"; };
 		5F83C31B5009E9E1A7172F43 /* Pods-BackgroundDownload.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackgroundDownload.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BackgroundDownload/Pods-BackgroundDownload.debug.xcconfig"; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 				28E87F99223BEB230046FC1F /* ViewController.swift */,
 				56B3FBCD2281D364000AFA9D /* DownloadNative.swift */,
 				56B3FBCF2281D386000AFA9D /* DownloadAlamofire.swift */,
-				28E87FA9223BFF750046FC1F /* DownloadService.swift */,
 				28E87F9B223BEB230046FC1F /* Main.storyboard */,
 				28E87F9E223BEB240046FC1F /* Assets.xcassets */,
 				28E87FA0223BEB240046FC1F /* LaunchScreen.storyboard */,
@@ -213,7 +210,6 @@
 				56B3FBD02281D386000AFA9D /* DownloadAlamofire.swift in Sources */,
 				28E87F98223BEB230046FC1F /* AppDelegate.swift in Sources */,
 				56B3FBCE2281D364000AFA9D /* DownloadNative.swift in Sources */,
-				28E87FAA223BFF750046FC1F /* DownloadService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

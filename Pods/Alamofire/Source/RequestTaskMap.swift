@@ -112,7 +112,8 @@ struct RequestTaskMap {
 
     mutating func disassociateIfNecessaryAfterGatheringMetricsForTask(_ task: URLSessionTask) {
         guard let events = taskEvents[task] else {
-            fatalError("RequestTaskMap consistency error: no events corresponding to task found.")
+            return
+//            fatalError("RequestTaskMap consistency error: no events corresponding to task found.")
         }
 
         switch (events.completed, events.metricsGathered) {
@@ -124,7 +125,8 @@ struct RequestTaskMap {
 
     mutating func disassociateIfNecessaryAfterCompletingTask(_ task: URLSessionTask) {
         guard let events = taskEvents[task] else {
-            fatalError("RequestTaskMap consistency error: no events corresponding to task found.")
+            return
+//            fatalError("RequestTaskMap consistency error: no events corresponding to task found.")
         }
 
         switch (events.completed, events.metricsGathered) {

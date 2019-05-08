@@ -9,59 +9,59 @@
 import Foundation
 import Alamofire
 
-class DownloadAlamofire {
+class DownloadAlamofire: NSObject {
 
     var onProgress: ((Float, String) -> Void)?
 
-    // Strong reference to the session needed
-    private var sessionManager: Alamofire.Session!
-    private let events = ClosureEventMonitor()
     private let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-    func startDownload(_ url: String) {
-
-        // Create a background configuration
+    // Strong reference to the session needed
+    private lazy var sessionManager: Alamofire.Session = {
         let configuration = URLSessionConfiguration.background(withIdentifier: "ro.imagin.background.alamofire")
-        // Set events
+        return Alamofire.Session(configuration: configuration, eventMonitors: self.makeEvents())
+    }()
+
+    private func makeEvents() -> [EventMonitor] {
+        let events = ClosureEventMonitor()
         events.requestDidFinish = { request in
             print("Request finished \(request)")
         }
-        events.requestDidFailToCreateURLRequestWithError = { request, error in
-            print("Request failed \(request) \(error)")
+        events.taskDidComplete = { session, task, error in
+            print("Request failed \(session) \(task) \(error)")
+            if  let urlString = (error as NSError?)?.userInfo["NSErrorFailingURLStringKey"] as? String,
+                let resumedata = (error as NSError?)?.userInfo[NSURLSessionDownloadTaskResumeData] as? Data {
+                print("Found resume data for url \(urlString)")
+                self.startDownload(urlString, resumeData: resumedata)
+            }
         }
+        return [events]
+    }
 
-        let delegate = CustomSessionDelegate()
+    func startDownload(_ url: String, resumeData: Data?) {
 
-        sessionManager = Alamofire.Session(configuration: configuration, delegate: delegate)//, eventMonitors: [events])
-//        sessionManager = Alamofire.Session(configuration: configuration)
         let destination: DownloadRequest.Destination = { _, _ in
             let destinationURL = self.documentsPath.appendingPathComponent(URL(string: url)!.lastPathComponent)
             print(destinationURL)
             return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
         }
-        sessionManager.download(url, to: destination)
-            .responseData { response in
-                print(response)
-            }
-            .downloadProgress { progress in
-                let percent = progress.fractionCompleted
-                let totalSize = ByteCountFormatter.string(fromByteCount: progress.totalUnitCount, countStyle: .file)
-                self.onProgress?(Float(percent), totalSize)
+        var request: DownloadRequest
+        if let data = resumeData {
+            request = sessionManager.download(resumingWith: data)
+        } else {
+            request = sessionManager.download(url, to: destination)
+        }
+        request.responseData { response in
+            print(response)
+        }
+        request.downloadProgress { progress in
+            let percent = progress.fractionCompleted
+            let totalSize = ByteCountFormatter.string(fromByteCount: progress.totalUnitCount, countStyle: .file)
+            self.onProgress?(Float(percent), totalSize)
         }
     }
 
+    private var temporarySession: URLSession!
     func resumeDownload() {
-        events.requestDidFinish = { request in
-            print("Request finished 2 \(request)")
-        }
-        events.requestDidFailToCreateURLRequestWithError = { request, error in
-            print("Request failed 2 \(request) \(error)")
-        }
-        let configuration = URLSessionConfiguration.background(withIdentifier: "ro.imagin.background.alamofire")
-        sessionManager = Alamofire.Session(configuration: configuration, eventMonitors: [events])
+        // Create the session and listen for errors in the EventManager
+        let _ = sessionManager
     }
-}
-
-class CustomSessionDelegate: Alamofire.SessionDelegate {
-
 }
